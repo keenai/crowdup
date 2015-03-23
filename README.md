@@ -24,9 +24,10 @@ Then watch the magic happen!
 * User has option to look over files to be updated and bail if something looks wrong without modifying anything.
 
 Coming soon:
-* Detect if file need to be updated or not.
+* Require paths in command line tool
+* Detect if files need to be updated or not.
 * Open crowdin zip and match files from archive.
-* Possibly pull translations from crowdin directly.
+* Pull translations from crowdin directly.
 
 ## Crowdin
 
