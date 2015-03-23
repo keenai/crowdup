@@ -1,7 +1,7 @@
 {
   "preferGlobal": true,
   "main": "index",
-  "name": "crowdin-update",
+  "name": "crowdup",
   "description": "A simple CLI tool to update crowdin translations for web applications",
   "version": "0.0.1",
   "author": "Daniel Bohannon <tkdan235@gmail.com>",
