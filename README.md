@@ -17,10 +17,10 @@ crowdup update ~/Download/crowdin-translations/ ~/Projects/webapp/app/i18n/
 
 Then watch the magic happen!
 
-{insert gif here}
+![demo](https://i.imgur.com/waz8Tqw.gif)
 
 * Matches translations based on filename.
-* Gives user ability to overwrite existing webapp translations with those from crowdin folder.
+* Gives user ability to overwrite existing webapp translations with those from crowdin downloaded translations.
 * User has option to look over files to be updated and bail if something looks wrong without modifying anything.
 
 Coming soon:

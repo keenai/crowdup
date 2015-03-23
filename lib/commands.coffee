@@ -67,7 +67,7 @@ program.command('update [crowdin translations path] [webapp translations path]')
         prompt.start()
 
         # get the simple yes or no property
-        prompt.get ['yesno'], (err, result) =>
+        prompt.get ['yesno'], (err, result) ->
           if result.yesno.match(/yes/i)
             _.forEach fileIntersection, (file) ->
               fs.copy file.crowdinPath, file.webAppPath, (err) ->
