@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+CoffeeScript = require('coffee-script');
+CoffeeScript.register()
+require('../lib/commands.coffee');
