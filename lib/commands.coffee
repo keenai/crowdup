@@ -134,20 +134,21 @@ program.command('update')
           _.forEach webAppFilePaths, (webAppFilePath) ->
             # if the file names are the same
             if crowdinFilePath.split('/').pop() is webAppFilePath.split('/').pop()
-              # if webAppFilePath.split('/').pop().indexOf('.DS_Store') is -1
-                # push object to intersection array
-                intersection.push
-                  fileName: webAppFilePath.split('/').pop()
-                  crowdinPath: crowdinFilePath
-                  webAppPath: webAppFilePath
+              # push object to intersection array
+              intersection.push
+                fileName: webAppFilePath.split('/').pop()
+                crowdinPath: crowdinFilePath
+                webAppPath: webAppFilePath
 
         # remove ignored files from array
-        ignored = [
-          '.DS_Store'
-        ]
-        _.remove(intersection, (file) ->
-          ignored.indexOf(file.fileName) > -1
-        )
+        # ignored = [
+        #   '.DS_Store'
+        # ]
+        # _.remove(intersection, (file) ->
+        #   ignored.indexOf(file.fileName) > -1
+        # )
+        #
+        # console.log intersection
 
         # callback intersection of file names
         callback null, intersection
@@ -180,15 +181,31 @@ program.command('update')
           # get the simple yes or no property
           prompt.get ['yesno'], (err, result) ->
             if result.yesno.match(/yes/i)
-              _.forEach fileIntersection, (file) ->
-                fs.copy file.crowdinPath, file.webAppPath, (err) ->
+              # Loop over fileIntersection asynchronously
+              updateTranslations = (iteration) ->
+                # copy overwriting current translations
+                fs.copy fileIntersection[iteration].crowdinPath, fileIntersection[iteration].webAppPath, (err) ->
                   throw err if err
-                  console.log "UPDATED:".green, file.webAppPath
-              callback null, 1
+                  # ensure translated files have mode of 755
+                  fs.chmod fileIntersection[iteration].webAppPath, '755', (err) ->
+                    throw err if err
+                    console.log "UPDATED:".green, fileIntersection[iteration].webAppPath
+                    # callback on last loop
+                    if fileIntersection.length is iteration + 1
+                      callback null, 1
+                    else
+                      updateTranslations(iteration + 1)
+              updateTranslations(0)
             else
               callback null, 0
     ], (err, results) ->
       throw err if err
+
+      # remove translation files from tmp dir
+      fs.remove '/tmp/translations*', (err) ->
+        throw err if err
+
+      # if no files were changed log to user
       if results is 0
         console.log "No translation files were updated..."
 
