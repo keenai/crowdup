@@ -7,26 +7,7 @@ class Config
   @file: """
   #{process.env.HOME or process.env.HOMEPATH or process.env.USERPROFILE}/.crowdup
   """
-
-  @fileDefault: "../config.json"
-
-  try
-    stats = fs.statSync @file
-
-    if stats.isFile()
-      nconf.file @file
-
-  catch error
-    try
-      fs.copySync((path.resolve __dirname, @fileDefault), @file)
-      stats = fs.statSync @file
-
-      if stats.isFile()
-        nconf.file @file
-
-    catch error
-      nconf.file path.resolve __dirname, @fileDefault
-      console.log "using default config file, run \"crowdup config\" to create one"
+  nconf.file @file
 
   @check: ->
     true if nconf.get 'appPath'
