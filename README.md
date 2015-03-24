@@ -7,7 +7,7 @@ This project is early in dev and a WIP. Please file issues!
 
 ## Demo
 
-[Configure](#use-with-crowdin-api) then run `crowdup update` and watch the magic happen!
+[Configure](#use-with-crowdin-api!) then run `crowdup update` and watch the magic happen!
 
 ![demo](https://i.imgur.com/2xrKdrY.gif)
 
@@ -40,7 +40,7 @@ $ brew install node
 
 ### Install
 
-Be sure all [dependencies](#Dependencies) are install before installing **crowdup**.
+Be sure all [dependencies](#Dependencies) are installed before installing **crowdup**.
 
 ```
 $ sudo npm install -g crowdup
