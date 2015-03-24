@@ -1,37 +1,64 @@
 # crowdup
 
-For anyone who wants to easily update their webapp translations files from crowdin,
+For anyone who wants to easily update their app translations files from crowdin,
 **crowdup** is a project that helps update your translation via a simple command line interface.
 
 This project is early in dev and a WIP. Please file issues!
 
-## About
+## Demo
 
-Point **crowdup** at your freshly downloaded crowdin translations and your webapp translation directory:
-
-Example:
+Run `crowdup config` and add you app's translation directory, crowdin api key, and crowdin project identifier.
 
 ```
-crowdup update ~/Download/crowdin-translations/ ~/Projects/webapp/app/i18n/
+Example config update
 ```
 
-Then watch the magic happen!
+Then run `crowdup update` and watch the magic happen!
 
 ![demo](https://i.imgur.com/waz8Tqw.gif)
 
-* Matches translations based on filename.
-* Gives user ability to overwrite existing webapp translations with those from crowdin downloaded translations.
+
+Don't want to use the crowdin api? No problem.  Point crowdup at your crowdin translation download (either zip or directory) and you too can watch the magic happen:
+
+```
+Example config update
+```
+
+![demo](https://i.imgur.com/waz8Tqw.gif)
+
+## About
+
+**crowdup** matches translation files purely based on filename.  For instance, `../archive/en/en-US.json` will be matched with `../i18n/translated/en-US.json` and so forth. This might not work best for everyone; feel free to send a pull request to satisfy your scenario.
+
+**crowdup**
+* Gives user ability to overwrite existing webapp translations with those from crowdin.
+* Users can download via the corwdin api directly, or point **crowdup** at downloaded translations.
 * User has option to look over files to be updated and bail if something looks wrong without modifying anything.
+* Configuration is stored so updating translations in the future is super fast.
 
 Coming soon:
-* Require paths in command line tool
 * Detect if files need to be updated or not.
-* Open crowdin zip and match files from archive.
-* Pull translations from crowdin directly.
+* Better error detection and logging
 
-## Crowdin
+Current Options:
+```
+  Usage: crowdup [options] [command]
 
-At this point you must download your latest translations from crowdin and unpack the archive. **crowdup** needs to be pointed at this directory to function properly.
+
+  Commands:
+
+    config   Update configuration file at /Users/daniel/.crowdup
+    update   Let's update those translation files!
+
+  Options:
+
+    -h, --help                   output usage information
+    -V, --version                output the version number
+    -k, --key <key>              crowdin api key
+    -p, --projectid <projectid>  crowdin project id
+    -c, --crowdin <crowdin>      full path to crowdin translations download
+    -a, --app <app>              full path to app translation files
+```
 
 ## Setup
 ### Dependencies
