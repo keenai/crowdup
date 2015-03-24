@@ -3,7 +3,7 @@
   "main": "index",
   "name": "crowdup",
   "description": "A simple CLI tool to update crowdin translations for web applications",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "author": "Daniel Bohannon <tkdan235@gmail.com>",
   "repository": {
     "type": "git",
@@ -23,14 +23,18 @@
     "update"
   ],
   "dependencies": {
+    "adm-zip": "^0.4.7",
     "async": "^0.9.0",
     "coffee-script": "^1.8.0",
     "colors": "^0.6.2",
     "commander": "git://github.com/zhiyelee/commander.js.git#buginfo",
     "fs-extra": "^0.11.1",
+    "https": "^1.0.0",
     "lodash": "^2.4.1",
+    "nconf": "^0.7.1",
     "node-dir": "^0.1.6",
-    "prompt": "^0.2.14"
+    "path": "^0.11.14",
+    "request": "^2.53.0"
   },
   "coffeelintConfig": {
     "max_line_length": {
