@@ -83,5 +83,5 @@ $ crowdup update
 Don't want to use the crowdin api? No problem. Point crowdup at your crowdin translation download (either zip or directory) and at your app translations directory:
 
 ```
-crowdup update -c ~/Downloads/crowdin-translations.zip -a ~/Projects/webapp/app/i18n/
+$ crowdup update -c ~/Downloads/crowdin-translations.zip -a ~/Projects/webapp/app/i18n/
 ```
