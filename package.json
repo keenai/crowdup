@@ -3,7 +3,7 @@
   "main": "index",
   "name": "crowdup",
   "description": "A simple CLI tool to update crowdin translations for web applications",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": "Daniel Bohannon <tkdan235@gmail.com>",
   "repository": {
     "type": "git",
