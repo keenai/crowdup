@@ -7,7 +7,7 @@ This project is early in dev and a WIP. Please file issues!
 
 ## Demo
 
-[Configure](###-Use-with-crowdin-api) then run `crowdup update` and watch the magic happen!
+[Configure](#use-with-crowdin-api) then run `crowdup update` and watch the magic happen!
 
 ![demo](https://i.imgur.com/2xrKdrY.gif)
 
@@ -23,6 +23,8 @@ Features:
 
 Coming soon:
 * Detect translation matches based on sub folders where translation filenames are identical
+* Ability to map translations files from archive to specific translation file locations
+* Ability to ignore files
 * Detect if files need to be updated or not.
 * Better error detection and logging
 
