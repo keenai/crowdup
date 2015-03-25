@@ -22,6 +22,7 @@ program
   .option('-p, --projectid <projectid>', 'crowdin project id', Config.get('crowdin_project_identifier'))
   .option('-c, --crowdin <crowdin>', 'full path to crowdin translations download')
   .option('-a, --app <app>', 'full path to app translation files', Config.get('appPath'))
+  .option('-s, --strings <strings>', 'full path to app translation strings file', Config.get('strings'))
 
 program
   .command('config')
@@ -36,6 +37,12 @@ program
         default: program.app
         pattern: /^\/\w+/
         required: true
+      strings:
+        description: 'full path to app translations strings file'
+        message: 'example: /Users/daniel/Projects/webapp/app/i18n/localizable.json'
+        default: program.projectid
+        pattern: /^\/\w+/
+        required: false
       crowdin_api_key:
         description: 'crowdin api key found in account at crowdin.com'
         message: 'example: 16bb185580fb0bd4bc10760de84c9da5'
@@ -53,6 +60,7 @@ program
 
       # set data
       Config.set 'appPath', result?.path or program.app-path
+      Config.set 'strings', result?.strings or program.strings
       Config.set 'crowdin_api_key', result?.crowdin_api_key or program.key
       Config.set 'crowdin_project_identifier', result?.crowdin_project_identifier or program.projectid
 
@@ -243,6 +251,33 @@ program.command('status')
         body = JSON.parse(body)
         _.forEach body, (translation) ->
           console.log '\n' + prettyjson.render(translation, options)
+
+program.command('upload')
+  .description('Upload latest version of your localization file to Crowdin')
+  .action () ->
+    console.log '==> '.cyan.bold + 'upload localization file...'
+    console.log program.strings
+    # Attempt to upload translations file
+    # post_params = [fs.readFileSync(program.strings)]
+    options =
+      url: 'https://api.crowdin.com/api/project/' + program.projectid +
+        '/update-file?key=' + program.key
+      method: 'POST'
+      qs:
+        update_option: 'update_as_unapproved'
+        files: [fs.readFileSync(program.strings)]
+
+    request options, (error, response, body) ->
+      console.log error, response, body
+      # if body.match(/error/ig)
+      #   throw new Error 'Requested project does not exist or API key is not valid. Check your
+      #     crowdup configuration.'.red
+      # else
+      #   # make json response pretty =)
+      #   options = noColor: false
+      #   body = JSON.parse(body)
+      #   _.forEach body, (translation) ->
+      #     console.log '\n' + prettyjson.render(translation, options)
 
 program.parse(process.argv)
 
