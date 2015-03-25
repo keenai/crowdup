@@ -238,11 +238,35 @@ program.command('status')
         throw new Error 'Requested project does not exist or API key is not valid. Check your
           crowdup configuration.'.red
       else
-        # make json response pretty =)
-        options = noColor: false
         body = JSON.parse(body)
+        console.log 'Status Overview:\n'
         _.forEach body, (translation) ->
-          console.log '\n' + prettyjson.render(translation, options)
+          console.log translation.name.yellow
+          console.log 'approved progress  :', translation.approved_progress
+          console.log 'translated progress:', translation.translated_progress
+
+        prompt.message = "crowdup".yellow
+        prompt.delimiter = ": ".green
+        prompt.properties =
+          yesno:
+            default: 'no'
+            message: 'See all status details?'
+            required: true
+            warning: "Must respond yes or no"
+            validator: /y[es]*|n[o]?/
+
+        # Start the prompt
+        prompt.start()
+
+        # get the simple yes or no property
+        prompt.get ['yesno'], (err, result) ->
+          if result.yesno.match(/yes/i)
+
+            # make json response pretty =)
+            options = noColor: false
+            _.forEach body, (translation) ->
+              console.log '\n' + prettyjson.render(translation, options)
+
 
 program.parse(process.argv)
 
