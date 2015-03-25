@@ -1,37 +1,36 @@
 # crowdup
 
-For anyone who wants to easily update their app translations files from crowdin,
-**crowdup** is a project that helps update your translation via a simple command line interface.
+**crowdup** is a project for anyone who wants to easily update their app translations files from Crowdin that helps update translations via a simple command line interface.
 
-This project is early in dev and a WIP. Please file issues!
+This project is early in development and a work in progress. Please file issues!
 
 ## Demo
 
-[Configure](#use-with-crowdin-api) then run `crowdup update` and watch the magic happen!
+[Configure](#use-with-crowdin-API) **crowdup**, then run `crowdup update` and watch the magic happen!
 
 ![demo](https://i.imgur.com/2xrKdrY.gif)
 
 ## About
 
-**crowdup** matches translation files purely based on filename.  For instance, `../archive/en/en-US.json` will be matched with `../i18n/translated/en-US.json` and so forth. This might not work best for everyone; feel free to send a pull request to satisfy your scenario.
+**crowdup** matches translation files purely based on filename. For instance, `../archive/en/en-US.json` will be matched with `../i18n/translated/en-US.json` and so forth. This might not work best for everyone; feel free to send a pull request to satisfy your scenario.
 
 Features:
-* Gives user ability to overwrite existing webapp translations with those from crowdin.
-* Users can download via the corwdin api directly, or point **crowdup** at downloaded translations.
-* User has option to look over files to be updated and bail if something looks wrong without modifying anything.
-* Configuration is stored so updating translations in the future is super fast.
+* Gives users the ability to overwrite existing web app translations with those from Crowdin
+* Users can download via the Crowdin API directly, or point **crowdup** at downloaded translations
+* Users have the option to look over files to update and abort without modifying anything if something looks wrong
+* **crowdup** stores user configurations, so updating translations in the future is super fast
 
 Coming soon:
-* Detect translation matches based on sub folders where translation filenames are identical
-* Ability to map translations files from archive to specific translation file locations
+* Detect translation matches based on subfolders where translation filenames are identical
+* Ability to map translation files from archive to specific translation file locations
 * Ability to ignore files
-* Detect if files need to be updated or not.
+* Detect if files need to be updated or not
 * Better error detection and logging
 
 ## Setup
 ### Dependencies
 
-[NodeJS](http://nodejs.org/) is required to run **crowdup**. Find the installers and install the latest versions; if using Mac OSX consider installing [homebrew](http://brew.sh/) and easily install what you need with the following:  
+**crowdup** requires [NodeJS](http://nodejs.org/). Find and install the latest versions of NodeJS; if you use Mac OS X, consider installing [homebrew](http://brew.sh/) to easily install what you need with the following command:  
 
 
 ```
@@ -40,7 +39,7 @@ $ brew install node
 
 ### Install
 
-Be sure all [dependencies](#Dependencies) are installed before installing **crowdup**.
+Be sure to install all [dependencies](#Dependencies) before installing **crowdup**.
 
 ```
 $ sudo npm install -g crowdup
@@ -60,9 +59,9 @@ See **crowdup** help for a full list of commands.
 $ crowdup --help
 ```
 
-### Use with crowdin api
+### Use with Crowdin API
 
-Run `crowdup config` and add you app's translation directory, [crowdin api key](https://crowdin.com/page/api/authentication), and [crowdin project identifier](https://crowdin.com/page/api/authentication).  For an example:
+Run `crowdup config` and add your app's translation directory, [Crowdin API key](https://crowdin.com/page/api/authentication), and [Crowdin project identifier](https://crowdin.com/page/api/authentication). For example:
 
 ```
 $ crowdup config
@@ -78,9 +77,9 @@ $ crowdup update
 ```
 
 
-### Use with downloaded crowdin files
+### Use with downloaded Crowdin files
 
-Don't want to use the crowdin api? No problem. Point crowdup at your crowdin translation download (either zip or directory) and at your app translations directory:
+Don't want to use the Crowdin API? No problem. Point **crowdup** at your Crowdin translation download (either the .ZIP or directory) and at your app translations directory:
 
 ```
 $ crowdup update -c ~/Downloads/crowdin-translations.zip -a ~/Projects/webapp/app/i18n/
