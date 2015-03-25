@@ -34,6 +34,7 @@
     "nconf": "^0.7.1",
     "node-dir": "^0.1.6",
     "path": "^0.11.14",
+    "prettyjson": "^1.1.0",
     "progress": "^1.1.8",
     "prompt": "^0.2.14",
     "request": "^2.53.0",

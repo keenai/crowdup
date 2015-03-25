@@ -13,6 +13,7 @@ request = require 'request'
 progress = require 'request-progress'
 ProgressBar = require 'progress'
 AdmZip = require 'adm-zip'
+prettyjson = require 'prettyjson'
 
 program.version(pkg.version)
 
@@ -61,7 +62,7 @@ program
         console.log "saved crowdup configuration to #{Config.file}"
 
     prompt.start()
-    prompt.get ['path', 'crowdin_api_key', 'crowdin_project_identifier'], (error, result) ->
+    prompt.get ['path', 'strings', 'crowdin_api_key', 'crowdin_project_identifier'], (error, result) ->
       saveConfig result unless error?
 
 program.command('update')
@@ -75,31 +76,47 @@ program.command('update')
         if program.crowdin
           callback null, program.crowdin
         else
-          # Download latest translations
           console.log '==> '.cyan.bold + 'downloading latest translations...'
+
+          # Attempt to build latest translations
           url = 'https://api.crowdin.com/api/project/' + program.projectid +
-            '/download/all.zip?key=' + program.key
-          archive = '/tmp/translations.zip'
+            '/export?key=' + program.key
+          console.log 'building translations archive on crowdin...'
+          request url, (error, response, body) ->
+            if body.match(/error/ig)
+              throw new Error 'Requested project does not exist or API key is not valid. Check your
+                crowdup configuration.'.red
+            else if body.match(/skipped/ig)
+              console.log 'Translation build was skipped. Either no new translations to build or
+                the build request is within the crowdin 30 minute limit. Check the translations or
+                wait ~30 minutes.'.yellow
+            else if body.match(/built/ig)
+              console.log 'crowdin translation build was successful.'
 
-          bar = new ProgressBar('downloading [:bar] :percent :etas',
-            complete: '='
-            incomplete: ' '
-            width: 46
-            total: 1)
+            # Download latest translations
+            url = 'https://api.crowdin.com/api/project/' + program.projectid +
+              '/download/all.zip?key=' + program.key
+            archive = '/tmp/translations.zip'
 
-          progress(request(url),
-            throttle: 200
-            delay: 100).on('progress', (state) ->
-            bar.total = state.total
-            bar.tick state.received
-          ).on('error', (err) ->
-            throw err if err
-          ).pipe(fs.createWriteStream(archive)).on('error', (err) ->
-            throw err if err
-          ).on 'close', (err) ->
-            throw err if err
-            console.log archive + ' has successfully been downloaded.'
-            callback null, archive
+            bar = new ProgressBar('downloading [:bar] :percent :etas',
+              complete: '='
+              incomplete: ' '
+              width: 46
+              total: 1)
+
+            progress(request(url),
+              throttle: 200
+              delay: 100).on('progress', (state) ->
+              bar.total = state.total
+              bar.tick state.received
+            ).on('error', (err) ->
+              throw err if err
+            ).pipe(fs.createWriteStream(archive)).on('error', (err) ->
+              throw err if err
+            ).on 'close', (err) ->
+              throw err if err
+              console.log archive + ' has successfully been downloaded.'
+              callback null, archive
 
       (archive, callback) ->
         # extract archive
@@ -208,6 +225,24 @@ program.command('update')
       # if no files were changed log to user
       if results is 0
         console.log "No translation files were updated..."
+
+program.command('status')
+  .description('Get translation status from crowdin')
+  .action () ->
+    console.log '==> '.cyan.bold + 'checking translations status...'
+    # Attempt to get translation status
+    url = 'https://api.crowdin.com/api/project/' + program.projectid +
+      '/status?key=' + program.key + '&json'
+    request url, (error, response, body) ->
+      if body.match(/error/ig)
+        throw new Error 'Requested project does not exist or API key is not valid. Check your
+          crowdup configuration.'.red
+      else
+        # make json response pretty =)
+        options = noColor: false
+        body = JSON.parse(body)
+        _.forEach body, (translation) ->
+          console.log '\n' + prettyjson.render(translation, options)
 
 program.parse(process.argv)
 
