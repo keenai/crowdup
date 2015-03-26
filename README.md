@@ -19,6 +19,7 @@ Features:
 * Users can download via the Crowdin API directly, or point **crowdup** at downloaded translations
 * Users have the option to look over files to update and abort without modifying anything if something looks wrong
 * **crowdup** stores user configurations, so updating translations in the future is super fast
+* Check status of translations in Crowdin
 
 Coming soon:
 * Detect translation matches based on subfolders where translation filenames are identical
@@ -83,4 +84,12 @@ Don't want to use the Crowdin API? No problem. Point **crowdup** at your Crowdin
 
 ```
 $ crowdup update -c ~/Downloads/crowdin-translations.zip -a ~/Projects/webapp/app/i18n/
+```
+
+### Check status of translations
+
+Easily check the status of your translations with:
+
+```
+$ crowdup status
 ```
