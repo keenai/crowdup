@@ -16,7 +16,7 @@ This project is early in development and a work in progress. Please file issues!
 
 Features:
 * Gives users the ability to overwrite existing web app translations with those from Crowdin
-* Users can download via the Crowdin API directly, or point **crowdup** at downloaded translations
+* Users can build then download via the Crowdin API directly, or point **crowdup** at downloaded translations
 * Users have the option to look over files to update and abort without modifying anything if something looks wrong
 * **crowdup** stores user configurations, so updating translations in the future is super fast
 * Check status of translations in Crowdin
