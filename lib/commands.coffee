@@ -239,11 +239,18 @@ program.command('status')
           crowdup configuration.'.red
       else
         body = JSON.parse(body)
-        console.log 'Status Overview:\n'
+        console.log 'Status Overview:'
         _.forEach body, (translation) ->
           console.log translation.name.yellow
-          console.log 'approved progress  :', translation.approved_progress
-          console.log 'translated progress:', translation.translated_progress
+          if translation.approved_progress is 100
+            console.log "approved progress:   #{translation.approved_progress}% completed".green
+          else
+            console.log "approved progress:   #{translation.approved_progress}% completed".red
+
+          if translation.translated_progress is 100
+            console.log "translated progress: #{translation.translated_progress}% completed".green
+          else
+            console.log "translated progress: #{translation.translated_progress}% completed".red
 
         prompt.message = "crowdup".yellow
         prompt.delimiter = ": ".green
@@ -266,7 +273,6 @@ program.command('status')
             options = noColor: false
             _.forEach body, (translation) ->
               console.log '\n' + prettyjson.render(translation, options)
-
 
 program.parse(process.argv)
 
